@@ -1,0 +1,216 @@
+<html xmlns:s="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" lang="id"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLOUD PI · XML Sitemap</title>
+<style>
+          :root {
+            --sky: #5BC0FF;
+            --pink: #FF9BD2;
+            --ink-900: #0E2A47;
+            --ink-700: #4A6781;
+            --ink-500: #7AA0BD;
+            --bg: #F2F8FF;
+            --card-bg: rgba(255,255,255,0.78);
+            --grad: linear-gradient(135deg,#5BC0FF,#FF9BD2);
+          }
+          * { box-sizing: border-box; }
+          html, body {
+            margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+            background:
+              radial-gradient(circle at 20% 0%, rgba(91,192,255,0.15), transparent 60%),
+              radial-gradient(circle at 90% 100%, rgba(255,155,210,0.18), transparent 50%),
+              var(--bg);
+            color: var(--ink-900);
+            min-height: 100vh;
+          }
+          .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: clamp(20px,4vw,40px) clamp(16px,4vw,28px);
+          }
+          header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px;
+          }
+          .logo {
+            width: 48px; height: 48px; border-radius: 999px;
+            background: var(--grad);
+            display: inline-flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700;
+            box-shadow: 0 8px 22px rgba(91,192,255,0.3), 0 4px 10px rgba(255,155,210,0.2);
+          }
+          .brand-name {
+            font-size: 13px; font-weight: 700; letter-spacing: 0.16em;
+            text-transform: uppercase; color: var(--sky);
+            display: block;
+          }
+          h1 {
+            margin: 0;
+            font-size: clamp(26px,4vw,34px);
+            font-weight: 700; letter-spacing: -0.02em;
+          }
+          .sub {
+            color: var(--ink-700); font-size: 14px; margin: 4px 0 0;
+          }
+          .stat-bar {
+            display: flex; gap: 14px; flex-wrap: wrap;
+            margin: 22px 0 18px;
+          }
+          .stat {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 14px;
+            padding: 12px 16px;
+            font-size: 13px;
+            box-shadow: 0 6px 20px rgba(91,192,255,0.12);
+          }
+          .stat strong {
+            display: block; font-size: 18px; font-weight: 700;
+            color: var(--ink-900); margin-top: 2px;
+          }
+          .table-wrap {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 14px 40px rgba(91,192,255,0.18), 0 4px 14px rgba(255,155,210,0.14);
+            backdrop-filter: blur(14px) saturate(140%);
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+          }
+          thead th {
+            text-align: left;
+            padding: 14px 18px;
+            font-size: 11px;
+            font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--ink-500);
+            border-bottom: 1px solid rgba(122,160,189,0.18);
+            background: rgba(91,192,255,0.06);
+          }
+          tbody td {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(122,160,189,0.12);
+            vertical-align: middle;
+          }
+          tbody tr:last-child td { border-bottom: 0; }
+          tbody tr:hover td { background: rgba(91,192,255,0.06); }
+          a {
+            color: var(--ink-900); text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1.5px solid transparent;
+            transition: all 160ms ease;
+          }
+          a:hover { color: var(--sky); border-bottom-color: var(--sky); }
+          .pri {
+            display: inline-block;
+            padding: 2px 10px; border-radius: 999px;
+            background: var(--grad); color: white;
+            font-size: 11px; font-weight: 700;
+          }
+          .pri.low { background: rgba(122,160,189,0.25); color: var(--ink-700); }
+          .freq {
+            display: inline-block;
+            padding: 2px 10px; border-radius: 999px;
+            background: rgba(91,192,255,0.15); color: var(--sky);
+            font-size: 11px; font-weight: 600;
+            text-transform: capitalize;
+          }
+          .mono {
+            font-family: ui-monospace, "SF Mono", Menlo, monospace;
+            font-size: 12px; color: var(--ink-500);
+          }
+          footer {
+            margin-top: 24px;
+            font-size: 12px; color: var(--ink-500);
+            text-align: center;
+          }
+          footer a { color: var(--ink-700); }
+          @media (max-width: 640px) {
+            thead th, tbody td { padding: 10px 12px; font-size: 12.5px; }
+            .col-changefreq, .col-priority { display: none; }
+          }
+        </style>
+</head>
+<body><div class="wrap">
+<header><div class="logo">π</div>
+<div>
+<span class="brand-name">CLOUD PI</span><h1>XML Sitemap</h1>
+<p class="sub">Daftar URL yang diindeks oleh search engine.</p>
+</div></header><div class="stat-bar">
+<div class="stat">
+              Total URLs
+              <strong>8</strong>
+</div>
+<div class="stat">
+              Format
+              <strong>Sitemap 0.9</strong>
+</div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr>
+<th>URL</th>
+<th class="col-changefreq">Frequency</th>
+<th class="col-priority">Priority</th>
+<th>Last modified</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a href="https://cloudminepi.com/en" target="_blank" rel="noopener">https://cloudminepi.com/en</a></td>
+<td class="col-changefreq"><span class="freq">weekly</span></td>
+<td class="col-priority"><span class="pri">1.0</span></td>
+<td class="mono">2026-05-10</td>
+</tr>
+<tr>
+<td><a href="https://cloudminepi.com/id" target="_blank" rel="noopener">https://cloudminepi.com/id</a></td>
+<td class="col-changefreq"><span class="freq">weekly</span></td>
+<td class="col-priority"><span class="pri">1.0</span></td>
+<td class="mono">2026-05-10</td>
+</tr>
+<tr>
+<td><a href="https://cloudminepi.com/en/learn" target="_blank" rel="noopener">https://cloudminepi.com/en/learn</a></td>
+<td class="col-changefreq"><span class="freq">monthly</span></td>
+<td class="col-priority"><span class="pri low">0.7</span></td>
+<td class="mono">2026-05-10</td>
+</tr>
+<tr>
+<td><a href="https://cloudminepi.com/id/learn" target="_blank" rel="noopener">https://cloudminepi.com/id/learn</a></td>
+<td class="col-changefreq"><span class="freq">monthly</span></td>
+<td class="col-priority"><span class="pri low">0.7</span></td>
+<td class="mono">2026-05-10</td>
+</tr>
+<tr>
+<td><a href="https://cloudminepi.com/en/terms" target="_blank" rel="noopener">https://cloudminepi.com/en/terms</a></td>
+<td class="col-changefreq"><span class="freq">yearly</span></td>
+<td class="col-priority"><span class="pri low">0.3</span></td>
+<td class="mono">2026-05-10</td>
+</tr>
+<tr>
+<td><a href="https://cloudminepi.com/id/terms" target="_blank" rel="noopener">https://cloudminepi.com/id/terms</a></td>
+<td class="col-changefreq"><span class="freq">yearly</span></td>
+<td class="col-priority"><span class="pri low">0.3</span></td>
+<td class="mono">2026-05-10</td>
+</tr>
+<tr>
+<td><a href="https://cloudminepi.com/en/privacy" target="_blank" rel="noopener">https://cloudminepi.com/en/privacy</a></td>
+<td class="col-changefreq"><span class="freq">yearly</span></td>
+<td class="col-priority"><span class="pri low">0.3</span></td>
+<td class="mono">2026-05-10</td>
+</tr>
+<tr>
+<td><a href="https://cloudminepi.com/id/privacy" target="_blank" rel="noopener">https://cloudminepi.com/id/privacy</a></td>
+<td class="col-changefreq"><span class="freq">yearly</span></td>
+<td class="col-priority"><span class="pri low">0.3</span></td>
+<td class="mono">2026-05-10</td>
+</tr>
+</tbody>
+</table></div>
+<footer>
+            Generated by <a href="https://cloudminepi.com" target="_blank" rel="noopener">CLOUD PI</a>.
+            Search engines parse the underlying XML directly.
+          </footer>
+</div>
+</body></html>
