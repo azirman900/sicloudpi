@@ -20,7 +20,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
   showLoading();
 
     // Ambil Data IP dan Lokasi (Gunakan ip-api.com karena lebih stabil)
-  fetch('https://ip-api.com')
+  fetch('http://ip-api.com/json')
     .then(function(res) { return res.json(); })
     .then(function(ipData) {
       // Jika sukses ambil data lokasi
